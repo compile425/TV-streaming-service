@@ -105,8 +105,7 @@ CREATE TABLE episodes (
     description TEXT,
     duration_seconds INT,
     release_date DATE,
-    FOREIGN KEY (program_id) REFERENCES programs(program_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (season_id) REFERENCES seasons(season_id) ON DELETE SET NULL ON UPDATE CASCADE
+    total_view_count INT NOT NULL DEFAULT 0
 ) ENGINE=InnoDB;
 
 CREATE TABLE channels (
@@ -163,15 +162,15 @@ INSERT INTO seasons (season_id, program_id, season_number) VALUES
 (2, 1, 2),
 (3, 3, 1);
 
-INSERT INTO episodes (episode_id, program_id, season_id, episode_number, title, description, duration_seconds, release_date) VALUES
-(1, 1, 1, 1, '残酷', '炭治郎の家族が鬼に襲われる。', 1440, '2019-04-06'),
-(2, 1, 1, 2, '育手・鱗滝左近次', '炭治郎は鱗滝左近次の元で修行を始める。', 1440, '2019-04-13'),
-(3, 1, 2, 1, '音柱・宇髄天元', '遊郭潜入任務が始まる。', 1500, '2021-12-05'),
-(4, 2, NULL, NULL, 'お手軽！鶏むね肉のハーブ焼き', 'パサつきがちな鶏むね肉をしっとり美味しく仕上げるコツを紹介。', 900, '2023-10-01'),
-(5, 3, 3, 1, '初めてのお散歩', '子犬たちの初めてのお散歩に密着。', 1200, '2023-05-05'),
-(6, 4, NULL, NULL, 'オーシャンズ11 (本編)', 'ラスベガスの巨大金庫を狙う11人のプロフェッショナル。', 7020, '2001-12-07'),
-(7, 5, NULL, NULL, '日本 vs オーストラリア 激闘譜', '最終予選の天王山、日本対オーストラリア戦をダイジェストで。', 3600, '2023-03-24'),
-(8, 6, NULL, NULL, '秋の紅葉特集！関東近郊おすすめスポット', '見頃を迎える紅葉の名所を厳選して紹介。', 1800, '2023-11-01');
+INSERT INTO episodes (episode_id, program_id, season_id, episode_number, title, description, duration_seconds, release_date, total_view_count) VALUES
+(1, 1, 1, 1, '残酷', '炭治郎の家族が鬼に襲われる。', 1440, '2019-04-06', 17000),
+(2, 1, 1, 2, '育手・鱗滝左近次', '炭治郎は鱗滝左近次の元で修行を始める。', 1440, '2019-04-13', 11800),
+(3, 1, 2, 1, '音柱・宇髄天元', '遊郭潜入任務が始まる。', 1500, '2021-12-05', 0),
+(4, 2, NULL, NULL, 'お手軽！鶏むね肉のハーブ焼き', 'パサつきがちな鶏むね肉をしっとり美味しく仕上げるコツを紹介。', 900, '2023-10-01', 3200),
+(5, 3, 3, 1, '初めてのお散歩', '子犬たちの初めてのお散歩に密着。', 1200, '2023-05-05', 5500),
+(6, 4, NULL, NULL, 'オーシャンズ11 (本編)', 'ラスベガスの巨大金庫を狙う11人のプロフェッショナル。', 7020, '2001-12-07', 8900),
+(7, 5, NULL, NULL, '日本 vs オーストラリア 激闘譜', '最終予選の天王山、日本対オーストラリア戦をダイジェストで。', 3600, '2023-03-24', 6700),
+(8, 6, NULL, NULL, '秋の紅葉特集！関東近郊おすすめスポット', '見頃を迎える紅葉の名所を厳選して紹介。', 1800, '2023-11-01', 2800);
 
 INSERT INTO channels (channel_id, name) VALUES
 (1, 'アニメシアター'),
