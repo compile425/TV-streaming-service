@@ -45,25 +45,25 @@ LIMIT 3;
 
 ```
 SELECT
-    c.name AS channel_name,
-    b.start_time,
-    b.end_time,
-    s.season_number,
-    e.episode_number,
-    e.title AS episode_title,
-    e.description AS episode_description
+  c.name AS channel_name,
+  b.start_time,
+  b.end_time,
+  s.season_number,
+  e.episode_number,
+  e.title AS episode_title,
+  e.description AS episode_description
 FROM
-    broadcast_slots b
+  broadcast_slots b
 INNER JOIN
-    channels c ON b.channel_id = c.channel_id
+  channels c ON b.channel_id = c.channel_id
 INNER JOIN
-    episodes e ON b.episode_id = e.episode_id
+  episodes e ON b.episode_id = e.episode_id
 LEFT JOIN
-    seasons s ON e.season_id = s.season_id
+  seasons s ON e.season_id = s.season_id
 WHERE
-    DATE(b.start_time) = CURRENT_DATE
+  DATE(b.start_time) = CURRENT_DATE
 ORDER BY
-    channel_name, b.start_time; 
+  channel_name, b.start_time; 
 ```
 
 
@@ -76,12 +76,12 @@ ORDER BY
 
 ```
 SELECT
-   b.start_time,
-   b.end_time,
-   s.season_number,
-   e.episode_number,
-   e.title,
-   e.description
+  b.start_time,
+  b.end_time,
+  s.season_number,
+  e.episode_number,
+  e.title,
+  e.description
 FROM
   broadcast_slots b
 INNER JOIN
