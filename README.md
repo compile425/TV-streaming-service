@@ -76,7 +76,7 @@ CREATE TABLE genres (
 CREATE TABLE programs (
     program_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
     series_judgment BOOLEAN NOT NULL DEFAULT FALSE
 ) ENGINE=InnoDB;
 
@@ -84,8 +84,12 @@ CREATE TABLE program_genres (
     program_id INT NOT NULL,
     genre_id INT NOT NULL,
     PRIMARY KEY (program_id, genre_id),
-    FOREIGN KEY (program_id) REFERENCES programs(program_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (program_id)
+    REFERENCES programs(program_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (genre_id)
+    REFERENCES genres(genre_id) 
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE seasons (
@@ -93,7 +97,9 @@ CREATE TABLE seasons (
     program_id INT NOT NULL,
     season_number INT NOT NULL,
     UNIQUE (program_id, season_number),
-    FOREIGN KEY (program_id) REFERENCES programs(program_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (program_id)
+    REFERENCES programs(program_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE episodes (
@@ -102,10 +108,16 @@ CREATE TABLE episodes (
     season_id INT NULL,
     episode_number INT NULL,
     title VARCHAR(255) NOT NULL,
-    description TEXT,
-    duration_seconds INT,
-    release_date DATE,
-    total_view_count INT NOT NULL DEFAULT 0
+    description TEXT NOT NULL,
+    duration_seconds INT NOT NULL,
+    release_date DATE NOT NULL,
+    total_view_count INT NOT NULL DEFAULT 0,
+    FOREIGN KEY (program_id)
+    REFERENCES programs(program_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (season_id)
+    REFERENCES seasons(season_id)
+    ON DELETE SET NULL ON UPDATE CASCAD
 ) ENGINE=InnoDB;
 
 CREATE TABLE channels (
@@ -120,14 +132,21 @@ CREATE TABLE broadcast_slots (
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     UNIQUE (channel_id, start_time),
-    FOREIGN KEY (channel_id) REFERENCES channels(channel_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (episode_id) REFERENCES episodes(episode_id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (channel_id)
+    REFERENCES channels(channel_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (episode_id)
+    REFERENCES episodes(episode_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE broadcast_slot_views (
     slot_id INT NOT NULL PRIMARY KEY,
     view_count INT NOT NULL DEFAULT 0,
-    FOREIGN KEY (slot_id) REFERENCES broadcast_slots(slot_id) ON DELETE CASCADE ON UPDATE CASCADE
+    PRIMARY KEY (slot_id),
+    FOREIGN KEY (slot_id)
+    REFERENCES broadcast_slots(slot_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 INSERT INTO genres (genre_id, name) VALUES
